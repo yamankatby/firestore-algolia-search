@@ -1,0 +1,40 @@
+{
+  "name": "backfill",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "github.com/algolia/firestore-algolia-search.git",
+    "directory": "scripts/backfill"
+  },
+  "scripts": {
+    "backfill": "ts-node ./src/index.ts",
+    "clean": "rimraf ./lib",
+    "compile": "tsc",
+    "build": "npm run clean && npm run compile",
+    "build:watch": "npm run clean && tsc --watch",
+    "prepare": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "lib"
+  ],
+  "bin": "./lib/index.js",
+  "author": "Yaman KATBY <yaman@invertase.io>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "commander": "^9.4.0",
+    "firebase-admin": "^11.0.1",
+    "inquirer": "^9.1.1"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.1",
+    "@types/jest": "^29.0.2",
+    "jest": "^29.0.3",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^29.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  }
+}
