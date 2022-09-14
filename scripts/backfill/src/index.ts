@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { program } from "commander";
-import { parseConfig } from "./config";
+import { DEFAULT_BATCH_SIZE, parseConfig } from "./config";
 
 const packageJson = require("../package.json");
 
@@ -34,6 +34,16 @@ program
   .option(
     "-I --algolia-index-name <algolia-index-name>",
     "Algolia index name where the records will be persisted."
+  )
+  .option(
+    "--batch-size <batch-size>",
+    "The number of documents to process in each batch.",
+    `${DEFAULT_BATCH_SIZE}`
+  )
+  .option(
+    "--multi-threaded <multi-threaded>",
+    "Whether to run the script across multiple threads.",
+    false
   )
   .action(run)
   .parseAsync(process.argv);
