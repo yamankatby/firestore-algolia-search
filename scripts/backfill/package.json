@@ -24,6 +24,7 @@
   "author": "Yaman KATBY <yaman@invertase.io>",
   "license": "Apache-2.0",
   "dependencies": {
+    "algoliasearch": "^4.14.2",
     "commander": "^9.4.0",
     "firebase-admin": "^11.0.1",
     "inquirer": "^6.5.2"

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
+import algoliaSearch from "algoliasearch";
 import { program } from "commander";
+import admin from "firebase-admin";
 import { DEFAULT_BATCH_SIZE, parseConfig } from "./config";
 
 const packageJson = require("../package.json");
@@ -50,5 +52,41 @@ program
 
 async function run(options: any) {
   const config = await parseConfig(options);
+
+  // todo: remove this
   console.log(config);
+
+  const {
+    projectId,
+    collectionPath,
+    algoliaAppId,
+    algoliaApiKey,
+    algoliaIndexName,
+  } = config;
+
+  const app = admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+    databaseURL: `https://${projectId}.firebaseio.com`,
+  });
+
+  const db = app.firestore();
+  const collection = db.collection(collectionPath);
+  const snapshot = await collection.get();
+  const docs = snapshot.docs;
+
+  // todo: remove this
+  console.log(docs.map((doc) => doc.data()));
+
+  const client = algoliaSearch(algoliaAppId, algoliaApiKey);
+
+  const index = client.initIndex(algoliaIndexName);
+
+  try {
+    await index.saveObjects(
+      docs.map((doc) => ({ objectID: doc.id, ...doc.data() }))
+    );
+  } catch (e) {
+    console.error(e);
+  }
+  console.log("Done!");
 }
